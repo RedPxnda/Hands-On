@@ -1,0 +1,238 @@
+[15:21:10] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21 with Fabric Loader 0.16.0
+[15:21:10] [main/INFO] (FabricLoader) Loading 64 mods:
+	- architectury 13.0.8
+	- fabric-api 0.102.0+1.21
+	- fabric-api-base 0.4.42+6573ed8cd1
+	- fabric-api-lookup-api-v1 1.6.68+b5597344d1
+	- fabric-biome-api-v1 13.0.29+5bd9f1bcd1
+	- fabric-block-api-v1 1.0.22+0af3f5a7d1
+	- fabric-block-view-api-v2 1.0.10+6573ed8cd1
+	- fabric-blockrenderlayer-v1 1.1.52+0af3f5a7d1
+	- fabric-client-tags-api-v1 1.1.15+6573ed8cd1
+	- fabric-command-api-v1 1.2.49+f71b366fd1
+	- fabric-command-api-v2 2.2.28+6ced4dd9d1
+	- fabric-commands-v0 0.2.66+df3654b3d1
+	- fabric-content-registries-v0 8.0.16+b5597344d1
+	- fabric-convention-tags-v1 2.0.19+7f945d5bd1
+	- fabric-convention-tags-v2 2.5.0+c5e2b5c6d1
+	- fabric-crash-report-info-v1 0.2.29+0af3f5a7d1
+	- fabric-data-attachment-api-v1 1.1.27+6a6dfa19d1
+	- fabric-data-generation-api-v1 20.2.16+16c4ae25d1
+	- fabric-dimensions-v1 4.0.0+6fc22b99d1
+	- fabric-entity-events-v1 1.6.12+6fc22b99d1
+	- fabric-events-interaction-v0 0.7.12+ba9dae06d1
+	- fabric-game-rule-api-v1 1.0.53+6ced4dd9d1
+	- fabric-gametest-api-v1 2.0.4+6fc22b99d1
+	- fabric-item-api-v1 11.0.0+afdfc921d1
+	- fabric-item-group-api-v1 4.1.4+78017270d1
+	- fabric-key-binding-api-v1 1.0.47+0af3f5a7d1
+	- fabric-keybindings-v0 0.2.45+df3654b3d1
+	- fabric-lifecycle-events-v1 2.3.12+6c1df360d1
+	- fabric-loot-api-v2 3.0.14+3f89f5a5d1
+	- fabric-loot-api-v3 1.0.2+3f89f5a5d1
+	- fabric-message-api-v1 6.0.13+6573ed8cd1
+	- fabric-model-loading-api-v1 2.0.0+fe474d6bd1
+	- fabric-networking-api-v1 4.2.2+60c3209bd1
+	- fabric-object-builder-api-v1 15.2.0+a551f7a4d1
+	- fabric-particles-v1 4.0.2+6573ed8cd1
+	- fabric-recipe-api-v1 5.0.12+65089712d1
+	- fabric-registry-sync-v0 5.1.2+60c3209bd1
+	- fabric-renderer-api-v1 3.4.0+c705a49cd1
+	- fabric-renderer-indigo 1.7.0+c705a49cd1
+	- fabric-renderer-registries-v1 3.2.68+df3654b3d1
+	- fabric-rendering-data-attachment-v1 0.3.48+73761d2ed1
+	- fabric-rendering-fluids-v1 3.1.6+b5597344d1
+	- fabric-rendering-v0 1.1.71+df3654b3d1
+	- fabric-rendering-v1 5.0.5+df16efd0d1
+	- fabric-resource-conditions-api-v1 4.3.0+8dc279b1d1
+	- fabric-resource-loader-v0 1.3.0+56599129d1
+	- fabric-screen-api-v1 2.0.24+b5597344d1
+	- fabric-screen-handler-api-v1 1.3.86+b5597344d1
+	- fabric-sound-api-v1 1.0.23+6573ed8cd1
+	- fabric-transfer-api-v1 5.1.16+3dccd343d1
+	- fabric-transitive-access-wideners-v1 6.1.0+176f9036d1
+	- fabricloader 0.16.0
+	- generated_35e91bd 1.0.0
+	- handson 1.0-SNAPSHOT
+	- java 21
+	- miapi 2.0.0-snapshot-1
+	- minecraft 1.21
+	- mixinextras 0.4.0
+	- modmenu 11.0.1
+	- nucleus 1.1.4
+	- nucleus_codec 1.1.5
+	- nucleus_config 1.1.7
+	- nucleus_facet 1.0.1
+	- nucleus_pose 1.0.0
+[15:21:10] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/grame/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.0+mixin.0.8.7/2ce1c5d57a061f3e259ec30b8b0cb2dc889c5156/sponge-mixin-0.15.0+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[15:21:11] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[15:21:11] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[15:21:11] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[15:21:11] [main/WARN] (FabricLoader/Mixin) Error loading class: io/github/apace100/apoli/util/StackPowerUtil (java.lang.ClassNotFoundException: io/github/apace100/apoli/util/StackPowerUtil)
+[15:21:11] [main/WARN] (FabricLoader/Mixin) @Mixin target io.github.apace100.apoli.util.StackPowerUtil was not found miapi-common.mixins.json:ApoliStackPowerMixin from mod miapi
+[15:21:11] [main/WARN] (FabricLoader/Mixin) Error loading class: net/archers/item/misc/AutoFireHook (java.lang.ClassNotFoundException: net/archers/item/misc/AutoFireHook)
+[15:21:11] [main/WARN] (FabricLoader/Mixin) @Mixin target net.archers.item.misc.AutoFireHook was not found miapi-common.mixins.json:ArcheryHookMixin from mod miapi
+[15:21:11] [main/WARN] (FabricLoader/Mixin) Error loading class: net/bettercombat/api/WeaponAttributesHelper (java.lang.ClassNotFoundException: net/bettercombat/api/WeaponAttributesHelper)
+[15:21:11] [main/WARN] (FabricLoader/Mixin) @Mixin target net.bettercombat.api.WeaponAttributesHelper was not found miapi-common.mixins.json:BCWeaponRegistryMixin from mod miapi
+[15:21:12] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.0).
+[15:21:14] [Datafixer Bootstrap/INFO] (Minecraft) 226 Datafixer optimizations took 458 milliseconds
+[15:21:22] [main/ERROR] (Minecraft) No data fixer registered for miapi:thrown_item
+[15:21:23] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[15:21:23] [Render thread/INFO] (Minecraft) Setting user: Player191
+[15:21:23] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id nucleus:sync_config
+[15:21:23] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id miapi:default-s2c-networking-old
+[15:21:23] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id miapi:default-c2s-networking-old
+[15:21:23] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id miapi:default-s2c-networking
+[15:21:23] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id miapi:default-c2s-networking
+[15:21:24] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id nucleus:sync_facet
+[15:21:24] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id nucleus:particle_creation
+[15:21:24] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id nucleus:sync_pose_facet
+[15:21:24] [Render thread/INFO] (ModularItem API) Registered Truly Modulars Property resolvers:
+[15:21:24] [Render thread/INFO] (ModularItem API) registered resolver: miapi:miapi/module
+[15:21:24] [Render thread/INFO] (ModularItem API) registered resolver: miapi:miapi/module_data
+[15:21:24] [Render thread/INFO] (ModularItem API) registered resolver: miapi:skin
+[15:21:24] [Render thread/INFO] (ModularItem API) registered resolver: miapi:synergies
+[15:21:24] [Render thread/INFO] (ModularItem API) registered resolver: miapi:material_property
+[15:21:24] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id architectury:spawn_entity_packet
+[15:21:25] [Render thread/INFO] (Mod Menu/Update Checker) Checking mod updates...
+[15:21:25] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[15:21:25] [ModMenu/Update Checker/Fabric Loader/INFO] (Mod Menu/Update Checker) Update available for 'fabricloader@0.16.0'
+[15:21:25] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.3-snapshot
+[15:21:27] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, fabric, fabric-api, fabric-api-base, fabric-api-lookup-api-v1, fabric-biome-api-v1, fabric-block-api-v1, fabric-block-view-api-v2, fabric-blockrenderlayer-v1, fabric-client-tags-api-v1, fabric-command-api-v1, fabric-command-api-v2, fabric-commands-v0, fabric-content-registries-v0, fabric-convention-tags-v1, fabric-convention-tags-v2, fabric-crash-report-info-v1, fabric-data-attachment-api-v1, fabric-data-generation-api-v1, fabric-dimensions-v1, fabric-entity-events-v1, fabric-events-interaction-v0, fabric-game-rule-api-v1, fabric-gametest-api-v1, fabric-item-api-v1, fabric-item-group-api-v1, fabric-key-binding-api-v1, fabric-keybindings-v0, fabric-lifecycle-events-v1, fabric-loot-api-v2, fabric-loot-api-v3, fabric-message-api-v1, fabric-model-loading-api-v1, fabric-networking-api-v1, fabric-object-builder-api-v1, fabric-particles-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-renderer-api-v1, fabric-renderer-indigo, fabric-renderer-registries-v1, fabric-rendering-data-attachment-v1, fabric-rendering-fluids-v1, fabric-rendering-v0, fabric-rendering-v1, fabric-resource-conditions-api-v1, fabric-resource-loader-v0, fabric-screen-api-v1, fabric-screen-handler-api-v1, fabric-sound-api-v1, fabric-transfer-api-v1, fabric-transitive-access-wideners-v1, fabricloader, miapi, modmenu, nucleus, nucleus_config
+[15:21:27] [Render thread/INFO] (Nucleus: ConfigManager) Successfully created file watcher (and thread) for config folder. (C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\fabric\run\config)
+[15:21:27] [Worker-Main-11/INFO] (Minecraft) Found unifont_all_no_pua-15.1.05.hex, loading
+[15:21:27] [Worker-Main-3/INFO] (Minecraft) Found unifont_jp_patch-15.1.05.hex, loading
+[15:21:27] [Worker-Main-1/WARN] (Minecraft) Texture miapi:item/rainbow_animation_5 with size 1x16 limits mip level from 4 to 0
+[15:21:27] [Worker-Main-1/WARN] (Minecraft) minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 0, because of minimum power of two: 1
+[15:21:29] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
+[15:21:29] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[15:21:29] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Speakers (Razer Nari Essential)
+[15:21:29] [Render thread/INFO] (Minecraft) Sound engine started
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/blocks.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[15:21:29] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[15:21:30] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[15:21:30] [Render thread/INFO] (Minecraft) Created: 512x16x0 miapi:textures/atlas/materials.png-atlas
+[15:21:53] [Render thread/INFO] (Minecraft) Loaded 1292 recipes
+[15:21:53] [Render thread/INFO] (Minecraft) Loaded 1399 advancements
+[15:21:53] [Render thread/WARN] (ModularItem API) Could not setup Smithing Materials, could not find Recipes
+[15:21:53] [Render thread/INFO] (ModularItem API) loaded Blueprint miapi:miapi/blueprint/testing.json
+[15:21:53] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:21:53] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:21:53] [Render thread/INFO] (ModularItem API) loaded Blueprint miapi:miapi/blueprint/testing.json
+[15:21:53] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:21:53] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:21:53] [Render thread/INFO] (ModularItem API) Loaded 9 Modules
+[15:21:53] [Render thread/INFO] (ModularItem API) Loaded 0 Modular Converters
+[15:21:53] [Render thread/INFO] (ModularItem API) Loaded 109 Materials
+[15:21:53] [Render thread/INFO] (ModularItem API) Loaded 1 Blueprints
+[15:21:53] [Render thread/INFO] (ModularItem API) Loaded 0 Synergies
+[15:21:53] [Render thread/INFO] (ModularItem API) Loaded 0 Skins
+[15:21:53] [Render thread/INFO] (ModularItem API) Server load took 94.1405 ms
+[15:21:53] [Render thread/WARN] (Minecraft) Not all defined tags for registry ResourceKey[minecraft:root / minecraft:item] are present in data pack: minecraft:miapi_materials
+[15:21:58] [Render thread/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 2.299 ms
+[15:21:58] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.21
+[15:21:58] [Server thread/INFO] (Minecraft) Generating keypair
+[15:22:00] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[15:22:00] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[15:22:00] [Render thread/INFO] (Minecraft) Time elapsed: 408 ms
+[15:22:00] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
+[15:22:00] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[15:22:01] [Server thread/INFO] (Minecraft) Player191[local:E:2464678c] logged in with entity id 3 at (0.4499497170515501, 100.0, 2.440328442083555)
+[15:22:01] [Server thread/INFO] (Minecraft) Player191 joined the game
+[15:22:01] [Server thread/INFO] (Minecraft) Player191 has made the advancement [Getting an Upgrade]
+[15:22:02] [Render thread/INFO] (Minecraft) [System] [CHAT] Player191 has made the advancement [Getting an Upgrade]
+[15:22:02] [Render thread/INFO] (ModularItem API) loaded Blueprint miapi:miapi/blueprint/testing.json
+[15:22:02] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:22:02] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:22:02] [Render thread/INFO] (ModularItem API) loaded Blueprint miapi:miapi/blueprint/testing.json
+[15:22:02] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:22:02] [Render thread/WARN] (ModularItem API) could not find module arsenal:blade/normal substituting with empty module
+[15:22:02] [Render thread/INFO] (ModularItem API) Loaded 9 Modules
+[15:22:02] [Render thread/INFO] (ModularItem API) Loaded 0 Modular Converters
+[15:22:02] [Render thread/ERROR] (ModularItem API) could not find module or item for create option miapi:miapi/create_options/modular_material.json
+[15:22:02] [Render thread/ERROR] (ModularItem API) {    "module": "miapi:modular_material/base",    "translation": "miapi.create_item.material",    "priority":-50}
+[15:22:02] [Render thread/INFO] (ModularItem API) Loaded 109 Materials
+[15:22:02] [Render thread/INFO] (ModularItem API) Loaded 1 Blueprints
+[15:22:02] [Render thread/INFO] (ModularItem API) Loaded 0 Synergies
+[15:22:02] [Render thread/INFO] (ModularItem API) Loaded 0 Skins
+[15:22:02] [Render thread/INFO] (ModularItem API) Client load took 97.5958 ms
+[15:22:02] [Render thread/INFO] (Minecraft) Loaded 28 advancements
+[15:22:36] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:22:36] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 59.71 ms
+[15:22:41] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:22:45] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:22:45] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:22:45] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:22:45] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:22:46] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:22:46] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 70.57 ms
+[15:22:51] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:23:04] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:23:04] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 61.24 ms
+[15:23:09] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:24:02] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:24:02] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 47.95 ms
+[15:24:07] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:24:18] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:24:18] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 47.26 ms
+[15:24:23] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:24:45] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:24:45] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 40.69 ms
+[15:24:50] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:29:23] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:29:25] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:29:25] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:29:25] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:29:25] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2403ms or 48 ticks behind
+[15:29:32] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:29:32] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:29:32] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:29:32] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:29:34] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:29:34] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:29:34] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:29:34] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:29:54] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:29:54] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 48.85 ms
+[15:29:59] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:30:07] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:30:07] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:30:07] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:30:07] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:30:11] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:30:11] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:30:11] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:30:11] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:30:38] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:30:38] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Redefined 1 class(es) from C:\Users\grame\OneDrive\Desktop\Minecraft Modding\Hands On\common\build\devlibs\tm_handson-common-1.0-SNAPSHOT-dev.jar in 45.80 ms
+[15:30:40] [Render thread/INFO] (Minecraft) [STDOUT]: interrupting!
+[15:30:43] [Thread-0/INFO] (Minecraft) [STDOUT]: [Architectury Transformer] Detected File Modification at tm_handson-common-1.0-SNAPSHOT-dev.jar
+[15:30:50] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:30:51] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:30:52] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:30:53] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:30:54] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 3965ms or 79 ticks behind
+[15:30:59] [Render thread/INFO] (Minecraft) [STDOUT]: interrupting!
+[15:31:04] [Render thread/INFO] (Minecraft) [STDOUT]: interrupting!
+[15:31:09] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:31:10] [Render thread/INFO] (Minecraft) [STDOUT]: interrupting!
+[15:31:12] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:31:12] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:31:12] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[15:31:12] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2908ms or 58 ticks behind
+[15:31:32] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[15:31:32] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[15:31:32] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[15:31:32] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
