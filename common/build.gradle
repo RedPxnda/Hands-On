@@ -11,4 +11,6 @@ dependencies {
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
     modApi "com.Truly-Modular.Modular-Item-API:Truly-Modular-miapi-common:${rootProject.miapi_version}-${rootProject.minecraft_version}"
+    modApi "com.redpxnda.nucleus:nucleus-core-common:${rootProject.minecraft_version}+${rootProject.nucleus_core_version}"
+    modApi "com.redpxnda.nucleus:nucleus-registration-common:${rootProject.minecraft_version}+${rootProject.nucleus_registration_version}"
 }

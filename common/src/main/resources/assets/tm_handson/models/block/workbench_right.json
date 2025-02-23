@@ -1,0 +1,43 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"1": "tm_handson:block/workbench",
+		"particle": "minecraft:block/smithing_table_bottom"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [3, 14, 3],
+			"faces": {
+				"north": {"uv": [0, 12, 7, 13], "rotation": 90, "texture": "#1"},
+				"east": {"uv": [0, 13, 7, 12], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [0, 12, 7, 13], "rotation": 90, "texture": "#1"},
+				"west": {"uv": [0, 13, 7, 12], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [7, 13, 8, 14], "texture": "#1"}
+			}
+		},
+		{
+			"from": [1, 0, 13],
+			"to": [3, 14, 15],
+			"faces": {
+				"north": {"uv": [0, 11, 7, 12], "rotation": 90, "texture": "#1"},
+				"east": {"uv": [0, 12, 7, 11], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [0, 11, 7, 12], "rotation": 90, "texture": "#1"},
+				"west": {"uv": [0, 12, 7, 11], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [7, 13, 8, 14], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 14, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [8, 8, 16, 9], "texture": "#1"},
+				"south": {"uv": [8, 9, 16, 10], "texture": "#1"},
+				"west": {"uv": [7, 11, 15, 12], "texture": "#1"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#1"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#1"}
+			}
+		}
+	]
+}

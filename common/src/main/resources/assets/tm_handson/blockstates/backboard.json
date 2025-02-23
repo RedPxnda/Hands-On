@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=north,half=left": {
+      "model": "tm_handson:block/backboard_left",
+      "y": 180
+    },
+    "facing=north,half=right": {
+      "model": "tm_handson:block/backboard_right",
+      "y": 180
+    },
+    "facing=east,half=left": {
+      "model": "tm_handson:block/backboard_left",
+      "y": 270
+    },
+    "facing=east,half=right": {
+      "model": "tm_handson:block/backboard_right",
+      "y": 270
+    },
+    "facing=south,half=left": {
+      "model": "tm_handson:block/backboard_left",
+      "y": 0
+    },
+    "facing=south,half=right": {
+      "model": "tm_handson:block/backboard_right",
+      "y": 0
+    },
+    "facing=west,half=left": {
+      "model": "tm_handson:block/backboard_left",
+      "y": 90
+    },
+    "facing=west,half=right": {
+      "model": "tm_handson:block/backboard_right",
+      "y": 90
+    }
+  }
+}
