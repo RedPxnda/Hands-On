@@ -1,8 +1,0 @@
-/tp @s 0 100 0
-/setblock ~ ~ ~ dirt
-/setblock 0 99 0 glass
-/tp @s 0 100 0
-/setblock ~ ~ ~ dirt
-/setblock 0 99 0 glass
-/time set day
-/gamerule doDaylightCycle false
