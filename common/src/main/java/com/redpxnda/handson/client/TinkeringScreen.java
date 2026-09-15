@@ -1,5 +1,6 @@
 package com.redpxnda.handson.client;
 
+import com.mojang.blaze3d.platform.Window;
 import com.redpxnda.handson.block.WorkbenchBlock;
 import com.redpxnda.handson.client.widgets.SimpleWorldWidget;
 import com.redpxnda.handson.blockentity.TinkeringMenu;
@@ -15,6 +16,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 import smartin.miapi.item.modular.Transform;
 
@@ -23,10 +25,11 @@ import java.util.List;
 public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> implements MovingCinematicScreen {
 
     protected Transform targetTransform;
-    public SimpleWorldWidget backboardWidget;
-    public SimpleWorldWidget tableTopWidget;
+    public WorldWidget backboardWidget;
+    public WorldWidget tableTopWidget;
     public Direction baseDirection;
     public TinkeringMenu menu;
+    public boolean detached;
 
     public TinkeringScreen(
             TinkeringMenu menu,
@@ -37,14 +40,26 @@ public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> impl
         this.targetTransform = menu.getWorkbench().getLookingTransform(menu.getTargetBlock(), menu.getTargetBlockState());
         this.baseDirection = menu.getTargetBlockState().getValue(WorkbenchBlock.FACING);
         this.menu = menu;
+        Minecraft mc = Minecraft.getInstance();
+        Window window = mc.getWindow();
+        this.imageWidth = window.getGuiScaledWidth();
+        this.imageHeight = window.getGuiScaledHeight();
+
+
+        this.leftPos = 0;
+        this.topPos = 0;
     }
 
     @Override
     protected void init() {
         super.init();
+        Vec3 initial = minecraft.gameRenderer.getMainCamera().getPosition();
+        Vec3 target = getTargetPosition();
+
         minecraft.options.hideGui = true;
-        backboardWidget = new SimpleWorldWidget(512, 256, Component.literal("test"));
-        tableTopWidget = new SimpleWorldWidget(512, 256, Component.literal("test"));
+        detached = initial.distanceTo(target) > 0.5;
+        backboardWidget = new WorldWidget(512, 256);
+        tableTopWidget = new WorldWidget(512, 256);
         backboardWidget.setLocalWorldTransform(
                 WorkbenchBlockEntityRenderer.createWorkbenchScreenTransform(
                         baseDirection,
@@ -65,8 +80,8 @@ public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> impl
                         baseDirection,
                         new Vector3f(1.5f, 1.505f, 0.5f),
                         new Vector3f(45f, 0.0f, 180.0f), 256).toMatrix();
-        //tableTopWidget.addChild(new SlotWidget(menu, menu.mainInteractableSlot, 256 - 9, 256 - 20));
-        //tableTopWidget.addChild(new PlayerInventoryWidget(menu, menu.player.getInventory(), 300, 100));
+        tableTopWidget.addChild(new SlotWidget(menu, menu.mainInteractableSlot, 256 - 9, 256 - 20));
+        tableTopWidget.addChild(new PlayerInventoryWidget(menu, menu.player.getInventory(), 300, 100));
         addWidget(tableTopWidget);
         addWidget(backboardWidget);
     }
@@ -93,6 +108,11 @@ public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> impl
     public @Override void setClosing(boolean isClosing) {this.closing = isClosing;}
 
     @Override
+    public boolean isCamDetached() {
+        return detached;
+    }
+
+    @Override
     public void containerTick() {
         super.containerTick();
         animationTick();
@@ -105,19 +125,14 @@ public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> impl
             int mouseY,
             float partialTick
     ) {
-        /*
-        super.render(
-                guiGraphics,
-                mouseX,
-                mouseY,
-                partialTick
-        );
-
-         */
         worldWidgets().forEach(worldWidget -> {
-            worldWidget.render(guiGraphics, mouseX, mouseY, partialTick);
+            worldWidget.captureMouseXY(guiGraphics, mouseX, mouseY, partialTick);
         });
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         //WorldMouseDebug.renderGui(guiGraphics);
+    }
+
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
     }
 
     @Override

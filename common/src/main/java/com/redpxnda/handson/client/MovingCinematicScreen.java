@@ -72,6 +72,8 @@ public interface MovingCinematicScreen {
     boolean isClosing();
     void setClosing(boolean isClosing);
 
+    boolean isCamDetached();
+
     /**
      * Gets the target position from the Transform.
      * <p>

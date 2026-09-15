@@ -2,6 +2,7 @@ package com.redpxnda.handson.client.widgets.slot;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -52,17 +53,26 @@ public class SlotWidget extends InteractAbleWidget {
         if (button != 0 && button != 1)
             return false;
 
-        Minecraft minecraft = Minecraft.getInstance();
+        Minecraft mc = Minecraft.getInstance();
 
-        if (minecraft.gameMode == null || minecraft.player == null)
+        if (mc.gameMode == null || mc.player == null)
             return false;
 
-        minecraft.gameMode.handleInventoryMouseClick(
+        if (mc.player.containerMenu != menu)
+            return false;
+
+        int slotId = menu.slots.indexOf(slot);
+
+        if (slotId < 0)
+            return false;
+
+
+        mc.gameMode.handleInventoryMouseClick(
                 menu.containerId,
-                slot.index,
+                slotId,
                 button,
                 ClickType.PICKUP,
-                minecraft.player
+                mc.player
         );
 
         return true;

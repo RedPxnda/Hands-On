@@ -51,6 +51,6 @@ public abstract class CameraMixin {
         setPosition(position);
         Vector2f camAngles = screen.getCamAngles();
         setRotation(camAngles.x(), camAngles.y());
-        detached = true;
+        detached = screen.isCamDetached();
     }
 }

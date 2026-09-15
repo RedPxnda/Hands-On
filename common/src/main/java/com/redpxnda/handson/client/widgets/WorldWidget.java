@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.redpxnda.nucleus.util.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -17,7 +18,7 @@ import smartin.miapi.client.gui.InteractAbleWidget;
 import java.lang.Math;
 import java.util.List;
 
-public abstract class WorldWidget extends InteractAbleWidget {
+public class WorldWidget extends InteractAbleWidget {
 
     protected final Matrix4f localWorldTransform = new Matrix4f();
     public Matrix4f localWidgetTransform = new Matrix4f();
@@ -31,7 +32,7 @@ public abstract class WorldWidget extends InteractAbleWidget {
         super(0, 0, width, height, title);
     }
 
-    protected WorldWidget(int width, int height) {
+    public WorldWidget(int width, int height) {
         this(width, height, Component.empty());
     }
 
@@ -39,8 +40,10 @@ public abstract class WorldWidget extends InteractAbleWidget {
         localWorldTransform.set(transform);
     }
 
-    int x;
-    int y;
+    int currentMouseX;
+    int currentMouseY;
+    int lastMouseX;
+    int lastMouseY;
 
     public final void renderInWorld(
             GuiGraphics guiGraphics,
@@ -48,7 +51,13 @@ public abstract class WorldWidget extends InteractAbleWidget {
     ) {
         guiGraphics.fill(0, 0, getWidth(), getHeight(), Color.GREEN.withAlpha(0.3f).argb());
         topLeftProjection = getPoint(getX(), getY(), guiGraphics);
-        guiGraphics.fill(x, y, x + 10, y + 10, Color.RED.argb());
+        guiGraphics.fill(currentMouseX, currentMouseY, currentMouseX + 10, currentMouseY + 10, Color.RED.argb());
+        super.renderWidget(guiGraphics, currentMouseX, currentMouseY, partialTick);
+    }
+
+    @Override
+    public void renderWidget(GuiGraphics drawContext, int mouseX, int mouseY, float delta) {
+        captureMouseXY(drawContext, mouseX, mouseY, delta);
     }
 
     private @NotNull UiAnchor getPoint(int x, int y, GuiGraphics guiGraphics) {
@@ -66,24 +75,6 @@ public abstract class WorldWidget extends InteractAbleWidget {
             Matrix4f projection,
             Vector3f localPos
     ) {
-        public Vector2i getScreenPos() {
-            Vector4f p = new Vector4f(this.localPos(), 1);
-            p.mul(this.model());
-            p.mul(this.view());
-            p.mul(this.projection());
-            if (p.w <= 0)
-                return new Vector2i(-1, -1);
-
-            float ndcX = p.x / p.w;
-            float ndcY = p.y / p.w;
-            Minecraft mc = Minecraft.getInstance();
-            Window window = mc.getWindow();
-
-            int guiWidth = window.getGuiScaledWidth();
-            int guiHeight = window.getGuiScaledHeight();
-            return new Vector2i((int) ((ndcX + 1) * 0.5f * guiWidth), (int) ((1 - ndcY) * 0.5f * guiHeight));
-        }
-
         public Vector2i getWorldPosFromScreen(int screenX, int screenY) {
             Minecraft mc = Minecraft.getInstance();
             Window window = mc.getWindow();
@@ -133,8 +124,7 @@ public abstract class WorldWidget extends InteractAbleWidget {
     }
 
 
-    @Override
-    public void renderWidget(
+    public void captureMouseXY(
             GuiGraphics guiGraphics,
             int mouseX,
             int mouseY,
@@ -142,9 +132,10 @@ public abstract class WorldWidget extends InteractAbleWidget {
     ) {
 
         Vector2i localMouse = topLeftProjection.getWorldPosFromScreen(mouseX, mouseY);
-        x = localMouse.x;
-        y = localMouse.y;
-        super.renderWidget(guiGraphics, x, y, partialTick);
+        lastMouseX = currentMouseX;
+        lastMouseY = currentMouseY;
+        currentMouseX = localMouse.x;
+        currentMouseY = localMouse.y;
     }
 
     public static void renderFromBer(
@@ -170,6 +161,7 @@ public abstract class WorldWidget extends InteractAbleWidget {
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
+        RenderSystem.depthMask(false);
 
         for (WorldWidget widget : widgets) {
             if (widget == null) {
@@ -186,8 +178,73 @@ public abstract class WorldWidget extends InteractAbleWidget {
             graphics.pose().popPose();
             graphics.flush();
         }
+        RenderSystem.depthMask(true);
 
     }
 
+    @Override
+    public void mouseMoved(double mouseX, double mouseY) {
+        for (GuiEventListener child : this.children()) {
+            if (child.isMouseOver(currentMouseX, currentMouseY)) {
+                child.mouseMoved(currentMouseX, currentMouseY);
+            }
+        }
+        super.mouseMoved(currentMouseX, currentMouseY);
+    }
 
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        for (GuiEventListener child : this.children()) {
+            if (child.mouseClicked(currentMouseX, currentMouseY, button)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        for (GuiEventListener child : this.children()) {
+            if (child.isMouseOver(currentMouseX, currentMouseY)
+                && child.mouseReleased(currentMouseX, currentMouseY, button)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        double localDeltaX = currentMouseX - lastMouseX;
+        double localDeltaY = currentMouseY - lastMouseY;
+
+        for (GuiEventListener child : this.children()) {
+            if (child.isMouseOver(currentMouseX, currentMouseY)
+                && child.mouseDragged(
+                    currentMouseX,
+                    currentMouseY,
+                    button,
+                    localDeltaX,
+                    localDeltaY
+            )) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        for (GuiEventListener child : this.children()) {
+            if (child.mouseScrolled(currentMouseX, currentMouseY, scrollX, scrollY)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return super.isMouseOver(currentMouseX, currentMouseY);
+    }
 }
