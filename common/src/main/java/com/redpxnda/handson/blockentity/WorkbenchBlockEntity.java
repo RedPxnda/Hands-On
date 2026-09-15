@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 public class WorkbenchBlockEntity extends BlockEntity {
     private ItemStack stack = ItemStack.EMPTY;
 
@@ -47,6 +49,22 @@ public class WorkbenchBlockEntity extends BlockEntity {
         } else {
             tag.remove("item");
         }
+    }
+
+    @Nullable
+    private UUID interactingPlayer;
+
+    public void setInteractingPlayer(@Nullable UUID playerUuid) {
+        this.interactingPlayer = playerUuid;
+    }
+
+    @Nullable
+    public UUID getInteractingPlayer() {
+        return interactingPlayer;
+    }
+
+    public boolean isBeingInteractedWith() {
+        return interactingPlayer != null;
     }
 
     @Override

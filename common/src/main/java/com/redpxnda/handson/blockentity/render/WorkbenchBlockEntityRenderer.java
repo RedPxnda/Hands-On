@@ -1,16 +1,19 @@
 package com.redpxnda.handson.blockentity.render;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import com.redpxnda.handson.block.WorkbenchBlock;
 import com.redpxnda.handson.blockentity.WorkbenchBlockEntity;
+import com.redpxnda.handson.client.TinkeringScreen;
+import com.redpxnda.handson.client.widgets.WorldWidget;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
-import net.minecraft.world.item.*;
-import smartin.miapi.item.modular.VisualModularItem;
+import org.joml.Vector3f;
+import smartin.miapi.item.modular.Transform;
+
+import java.util.List;
 
 public class WorkbenchBlockEntityRenderer implements BlockEntityRenderer<WorkbenchBlockEntity> {
     private final BlockEntityRendererProvider.Context context;
@@ -19,45 +22,84 @@ public class WorkbenchBlockEntityRenderer implements BlockEntityRenderer<Workben
         this.context = context;
     }
 
+    public static Transform createWorkbenchScreenTransform(
+            Direction baseDirection,
+            Vector3f offset,
+            Vector3f rotation,
+            float pixelsPerBlock
+    ) {
+        float baseYRotation = switch (baseDirection) {
+            case SOUTH -> 0.0f;
+            case WEST -> -90.0f;
+            case NORTH -> 180.0f;
+            case EAST -> 90.0f;
+            default -> 0.0f;
+        };
+        Transform base = new Transform(
+                new Vector3f(
+                        0.0f,
+                        baseYRotation,
+                        0.0f
+                ),
+                new Vector3f(
+                        0.5f,
+                        0.0f,
+                        0.5f
+                ),
+                new Vector3f(1.0f)
+        );
+        Transform offsetTransform = new Transform(
+                new Vector3f(0.0f),
+                new Vector3f(offset),
+                new Vector3f(1.0f)
+        );
+        Transform rotationTransform = new Transform(
+                new Vector3f(rotation),
+                new Vector3f(0.0f),
+                new Vector3f(1.0f)
+        );
+        float blockPerPixel = 1.0f / pixelsPerBlock;
+
+        Transform scaleTransform = new Transform(
+                new Vector3f(0.0f),
+                new Vector3f(0.0f),
+                new Vector3f(
+                        blockPerPixel,
+                        blockPerPixel,
+                        blockPerPixel
+                )
+        );
+
+        return base
+                .merge(offsetTransform)
+                .merge(rotationTransform)
+                .merge(scaleTransform);
+    }
+
     @Override
-    public void render(WorkbenchBlockEntity be, float partialTick, PoseStack ps, MultiBufferSource vertexConsumers, int light, int overlay) {
-        ItemStack stack = be.getItem();
-        if (stack.isEmpty()) return;
-
-        Direction facingDir = be.getBlockState().getValue(WorkbenchBlock.FACING);
-        Vec3i translationNormal = facingDir.getClockWise().getNormal();
-        boolean isModular = stack.getItem() instanceof VisualModularItem;
-        ps.pushPose();
-        ps.translate(8 / 16f, 16.5f / 16, 8 / 16f);
-        ps.translate(translationNormal.getX()/2f, translationNormal.getY()/2f, translationNormal.getZ()/2f);
-
-        float rotAmnt = facingDir.toYRot();
-        if (!(stack.getItem() instanceof Equipable) && (
-                isModular ||
-                stack.getItem() instanceof TieredItem ||
-                stack.getItem() instanceof SwordItem ||
-                stack.getItem() instanceof ArrowItem ||
-                //stack.getItem() instanceof CrossbowItem ||
-                stack.getItem() instanceof ProjectileWeaponItem))
-            rotAmnt -= 45;
-        else
-            rotAmnt -= 90;
-        ps.mulPose(Axis.YP.rotationDegrees(rotAmnt));
-        ps.mulPose(Axis.XP.rotationDegrees(90));
-        ps.scale(0.75f, 0.75f, 0.75f);
-
-        try {
-            //if (isModular)
-                // todo alpha property - ItemModule.getModules(stack).getProperty();
-            context.getItemRenderer().renderStatic(
-                    stack,
-                    ItemDisplayContext.FIXED,
-                    light, overlay,
-                    ps, vertexConsumers,
-                    be.getLevel(), 1
-            );
-        } catch (Exception ignored) {
+    public void render(
+            WorkbenchBlockEntity be,
+            float partialTick,
+            PoseStack ps,
+            MultiBufferSource vertexConsumers,
+            int light,
+            int overlay
+    ) {
+        if (!be.isBeingInteractedWith()) {
+            return;
         }
-        ps.popPose();
+
+        if (!(Minecraft.getInstance().screen instanceof TinkeringScreen screen)) {
+            return;
+        }
+        WorldWidget.renderFromBer(
+                be,
+                partialTick,
+                ps,
+                vertexConsumers,
+                light,
+                overlay,
+                List.of(screen.backboardWidget, screen.tableTopWidget)
+        );
     }
 }

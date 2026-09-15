@@ -20,9 +20,9 @@ public final class HandsOn {
         InteractionEvent.RIGHT_CLICK_BLOCK.register((player, hand, pos, face) -> {
             if (pos.getX() == 0 && pos.getZ() == 0 && pos.getY() == 100) {
                 if (player.level().isClientSide) {
-                    Minecraft.getInstance().setScreen(new TinkeringScreen(pos, Direction.NORTH));
+                    //Minecraft.getInstance().setScreen(new TinkeringScreen(pos, Direction.NORTH));
                 }
-                return EventResult.interruptFalse();
+                //return EventResult.interruptFalse();
             }
 
             return EventResult.pass();

@@ -1,34 +1,74 @@
 package com.redpxnda.handson.client;
 
-import com.redpxnda.nucleus.math.InterpolateMode;
-import com.redpxnda.nucleus.math.MathUtil;
+import com.redpxnda.handson.block.WorkbenchBlock;
+import com.redpxnda.handson.client.widgets.SimpleWorldWidget;
+import com.redpxnda.handson.blockentity.TinkeringMenu;
+import com.redpxnda.handson.blockentity.WorkbenchBlockEntity;
+import com.redpxnda.handson.blockentity.render.WorkbenchBlockEntityRenderer;
+import com.redpxnda.handson.client.widgets.slot.PlayerInventoryWidget;
+import com.redpxnda.handson.client.widgets.slot.SlotWidget;
+import com.redpxnda.handson.client.widgets.WorldWidget;
+import com.redpxnda.nucleus.util.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.BlockPos;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.player.Inventory;
+import org.joml.Vector3f;
+import smartin.miapi.item.modular.Transform;
 
-public class TinkeringScreen extends Screen {
-    public static final InterpolateMode START_ANIM = new InterpolateMode.EaseInOut(4);
+import java.util.List;
 
-    protected BlockPos targetBlock;
-    protected Direction workbenchDirection;
-    public int animationTicks = 4;
-    public boolean closing = false;
+public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> implements MovingCinematicScreen {
 
-    public TinkeringScreen(BlockPos targetBlock, Direction workbenchDirection) {
-        super(Component.empty());
-        this.targetBlock = targetBlock;
-        this.workbenchDirection = workbenchDirection;
+    protected Transform targetTransform;
+    public SimpleWorldWidget backboardWidget;
+    public SimpleWorldWidget tableTopWidget;
+    public Direction baseDirection;
+    public TinkeringMenu menu;
+
+    public TinkeringScreen(
+            TinkeringMenu menu,
+            Inventory inventory,
+            Component title
+    ) {
+        super(menu, inventory, title);
+        this.targetTransform = menu.getWorkbench().getLookingTransform(menu.getTargetBlock(), menu.getTargetBlockState());
+        this.baseDirection = menu.getTargetBlockState().getValue(WorkbenchBlock.FACING);
+        this.menu = menu;
     }
 
     @Override
     protected void init() {
         super.init();
         minecraft.options.hideGui = true;
+        backboardWidget = new SimpleWorldWidget(512, 256, Component.literal("test"));
+        tableTopWidget = new SimpleWorldWidget(512, 256, Component.literal("test"));
+        backboardWidget.setLocalWorldTransform(
+                WorkbenchBlockEntityRenderer.createWorkbenchScreenTransform(
+                        baseDirection,
+                        new Vector3f(1.5f, 2.0f, 7f / 16f - 0.005f),
+                        new Vector3f(0f, 0.0f, 180.0f), 256).toMatrix());
+        backboardWidget.localWidgetTransform =
+                WorkbenchBlockEntityRenderer.createWorkbenchScreenTransform(
+                        baseDirection,
+                        new Vector3f(1.5f, 2.0f, 7f / 16f - 0.005f),
+                        new Vector3f(0f, 0.0f, 180.0f), 256).toMatrix();
+        tableTopWidget.setLocalWorldTransform(
+                WorkbenchBlockEntityRenderer.createWorkbenchScreenTransform(
+                        baseDirection,
+                        new Vector3f(1.5f, 1.505f, 0.5f),
+                        new Vector3f(45f, 0.0f, 180.0f), 256).toMatrix());
+        tableTopWidget.localWidgetTransform =
+                WorkbenchBlockEntityRenderer.createWorkbenchScreenTransform(
+                        baseDirection,
+                        new Vector3f(1.5f, 1.505f, 0.5f),
+                        new Vector3f(45f, 0.0f, 180.0f), 256).toMatrix();
+        //tableTopWidget.addChild(new SlotWidget(menu, menu.mainInteractableSlot, 256 - 9, 256 - 20));
+        //tableTopWidget.addChild(new PlayerInventoryWidget(menu, menu.player.getInventory(), 300, 100));
+        addWidget(tableTopWidget);
+        addWidget(backboardWidget);
     }
 
     @Override
@@ -41,72 +81,73 @@ public class TinkeringScreen extends Screen {
         minecraft.options.hideGui = false;
     }
 
-    @Override
-    public void mouseMoved(double d, double e) {
-        super.mouseMoved(d, e);
-    }
+    public int animationTicks = 4;
+    public boolean closing = false;
+
+    public @Override int getAnimationTick() {return animationTicks;}
+
+    public @Override void setAnimationTick(int newTicks) {this.animationTicks = newTicks;}
+
+    public @Override boolean isClosing() {return closing;}
+
+    public @Override void setClosing(boolean isClosing) {this.closing = isClosing;}
 
     @Override
-    public void tick() {
-        super.tick();
-        if (animationTicks < 15 && !closing) animationTicks++;
-        else if (closing)
-            if (animationTicks > 4) animationTicks--;
-            else onCloseReal();
-
-    }
-
-    public Vec3 getCamPos(Vec3 initial) {
-        double targetX = getTargetBlock().getX() + 0.5;
-        double targetY = getTargetBlock().getY() + 3;
-        double targetZ = getTargetBlock().getZ() + 0.5;
-
-        if (animationTicks < 15) {
-            double cX = initial.x;
-            double cY = initial.y;
-            double cZ = initial.z;
-
-            float partial = closing ? -Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true) : Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
-            float prog = Math.min((animationTicks + partial) / 15f, 1f);
-            double rX = TinkeringScreen.START_ANIM.interpolate(prog, cX, targetX);
-            double rY = TinkeringScreen.START_ANIM.interpolate(prog, cY, targetY);
-            double rZ = TinkeringScreen.START_ANIM.interpolate(prog, cZ, targetZ);
-            return new Vec3(rX, rY, rZ);
-        } else {
-            double mX = minecraft.mouseHandler.xpos();
-            double mY = minecraft.mouseHandler.ypos();
-            double width = minecraft.getWindow().getWidth();
-            double height = minecraft.getWindow().getHeight();
-
-            double oX = mX - width/2;
-            double oY = mY - height/2;
-            Vec2 vec = new Vec2((float) oX, (float) oY);
-            Vec2 nVec = vec.normalized();
-            float prog = vec.length() / 2000;
-
-            return new Vec3(
-                    MathUtil.lerp(prog, targetX, targetX + nVec.x),
-                    targetY,
-                    MathUtil.lerp(prog, targetZ, targetZ + nVec.y)
-            );
-        }
+    public void containerTick() {
+        super.containerTick();
+        animationTick();
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int i, int j, float f) {
+    public void render(
+            GuiGraphics guiGraphics,
+            int mouseX,
+            int mouseY,
+            float partialTick
+    ) {
+        /*
+        super.render(
+                guiGraphics,
+                mouseX,
+                mouseY,
+                partialTick
+        );
 
+         */
+        worldWidgets().forEach(worldWidget -> {
+            worldWidget.render(guiGraphics, mouseX, mouseY, partialTick);
+        });
+        //WorldMouseDebug.renderGui(guiGraphics);
     }
 
-    public BlockPos getTargetBlock() {
-        return targetBlock;
+    @Override
+    protected void renderBg(
+            GuiGraphics guiGraphics,
+            float partialTick,
+            int mouseX,
+            int mouseY
+    ) {
     }
 
-    public Direction getWorkbenchDirection() {
-        return workbenchDirection;
+    @Override
+    public Transform getTargetTransform() {
+        return targetTransform;
     }
 
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    @Override
+    public Transform getLookingTransform() {
+        return this.targetTransform;
+    }
+
+    private final List<WorldWidget> worldWidgets() {
+        return List.of(
+                tableTopWidget,
+                backboardWidget
+        );
     }
 }

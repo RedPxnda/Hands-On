@@ -36,7 +36,7 @@ dependencies {
 
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
 
-    modApi "com.Truly-Modular.Modular-Item-API:Truly-Modular-miapi-neoforge:${rootProject.miapi_version}-${rootProject.minecraft_version}"
+    modApi( "com.github.Truly-Modular.Modular-Item-API:Truly-Modular-miapi-neoforge:${rootProject.miapi_version}")
     modApi "com.redpxnda.nucleus:nucleus-core-forge:${rootProject.minecraft_version}+${rootProject.nucleus_core_version}"
     modApi "com.redpxnda.nucleus:nucleus-registration-forge:${rootProject.minecraft_version}+${rootProject.nucleus_registration_version}"
 
