@@ -1,6 +1,5 @@
 package com.redpxnda.handson.blockentity.render;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.redpxnda.handson.blockentity.WorkbenchBlockEntity;
 import com.redpxnda.handson.client.TinkeringScreen;
@@ -12,8 +11,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import org.joml.Vector3f;
 import smartin.miapi.item.modular.Transform;
-
-import java.util.List;
 
 public class WorkbenchBlockEntityRenderer implements BlockEntityRenderer<WorkbenchBlockEntity> {
     private final BlockEntityRendererProvider.Context context;
@@ -58,7 +55,7 @@ public class WorkbenchBlockEntityRenderer implements BlockEntityRenderer<Workben
                 new Vector3f(0.0f),
                 new Vector3f(1.0f)
         );
-        float blockPerPixel = 1.0f / pixelsPerBlock;
+        float blockPerPixel = 1.0f / (pixelsPerBlock);
 
         Transform scaleTransform = new Transform(
                 new Vector3f(0.0f),
@@ -99,7 +96,7 @@ public class WorkbenchBlockEntityRenderer implements BlockEntityRenderer<Workben
                 vertexConsumers,
                 light,
                 overlay,
-                List.of(screen.backboardWidget, screen.tableTopWidget)
+                screen.worldWidgets()
         );
     }
 }

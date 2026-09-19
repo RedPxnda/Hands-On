@@ -3,6 +3,7 @@ package com.redpxnda.handson.block;
 import com.redpxnda.handson.HandsOnRegistries;
 import com.redpxnda.handson.blockentity.TinkeringMenu;
 import com.redpxnda.handson.blockentity.WorkbenchBlockEntity;
+import com.redpxnda.handson.client.MovingCinematicScreen;
 import com.redpxnda.handson.client.TinkeringScreen;
 import com.redpxnda.nucleus.util.MiscUtil;
 import dev.architectury.event.EventResult;
@@ -148,5 +149,9 @@ public class WorkbenchBlock extends DirectionalDoubleBlock implements EntityBloc
                 new Vector3f(x, y, z),
                 new Vector3f(1.0F, 1.0F, 1.0F)
         );
+    }
+    @Override
+    public MovingCinematicScreen.CinematicCameraLimits getCamLimits(BlockPos targetBlock, BlockState targetBlockState) {
+        return new MovingCinematicScreen.CinematicCameraLimits(0.2f,0.1f,30,40);
     }
 }

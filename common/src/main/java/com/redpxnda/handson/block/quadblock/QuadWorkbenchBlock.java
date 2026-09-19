@@ -3,6 +3,7 @@ package com.redpxnda.handson.block.quadblock;
 import com.redpxnda.handson.HandsOnRegistries;
 import com.redpxnda.handson.block.IWorkbench;
 import com.redpxnda.handson.blockentity.TinkeringMenu;
+import com.redpxnda.handson.client.MovingCinematicScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -94,7 +95,7 @@ public class QuadWorkbenchBlock
         Direction front = facing.getOpposite();
 
         float x = origin.getX() + 0.5f;
-        float y = origin.getY() + 0.5f;
+        float y = origin.getY() + 0.65f;
         float z = origin.getZ() + 0.5f;
         x += front.getStepX() * 0.8F;
         z += front.getStepZ() * 0.8F;
@@ -108,15 +109,17 @@ public class QuadWorkbenchBlock
             default -> 180.0F;
         };
 
-        float pitch = switch (facing) {
-            case SOUTH, EAST, WEST -> 20.0F;
-            default -> 20.0F;
-        };
+        float pitch = 30.0F;
 
         return new Transform(
                 new Vector3f(pitch, yaw, 0.0F),
                 new Vector3f(x, y, z),
                 new Vector3f(1.0F, 1.0F, 1.0F)
         );
+    }
+
+    @Override
+    public MovingCinematicScreen.CinematicCameraLimits getCamLimits(BlockPos targetBlock, BlockState targetBlockState) {
+        return new MovingCinematicScreen.CinematicCameraLimits(3.3f,0.1f,40,70);
     }
 }

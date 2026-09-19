@@ -1,21 +1,28 @@
 package com.redpxnda.handson.client.widgets;
 
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.redpxnda.nucleus.util.Color;
+import com.redpxnda.handson.client.DebugHelper;
+import com.redpxnda.handson.client.TransformEditor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
-import org.joml.*;
+import org.joml.Matrix4f;
+import org.joml.Vector2i;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import smartin.miapi.client.gui.InteractAbleWidget;
+import smartin.miapi.config.MiapiConfig;
+import smartin.miapi.item.modular.Transform;
 
-import java.lang.Math;
 import java.util.List;
 
 public class WorldWidget extends InteractAbleWidget {
@@ -23,6 +30,14 @@ public class WorldWidget extends InteractAbleWidget {
     protected final Matrix4f localWorldTransform = new Matrix4f();
     public Matrix4f localWidgetTransform = new Matrix4f();
     UiAnchor topLeftProjection = new UiAnchor(new Matrix4f(), new Matrix4f(), new Matrix4f(), new Vector3f());
+    private final Transform debugTransform =
+            new Transform(
+                    new Vector3f(),
+                    new Vector3f(),
+                    new Vector3f(1, 1, 1)
+            );
+
+    private TransformEditor transformEditor;
 
     protected WorldWidget(
             int width,
@@ -49,10 +64,18 @@ public class WorldWidget extends InteractAbleWidget {
             GuiGraphics guiGraphics,
             float partialTick
     ) {
-        guiGraphics.fill(0, 0, getWidth(), getHeight(), Color.GREEN.withAlpha(0.3f).argb());
         topLeftProjection = getPoint(getX(), getY(), guiGraphics);
-        guiGraphics.fill(currentMouseX, currentMouseY, currentMouseX + 10, currentMouseY + 10, Color.RED.argb());
         super.renderWidget(guiGraphics, currentMouseX, currentMouseY, partialTick);
+        if (isDebug()) {
+            guiGraphics.flush();
+            RenderSystem.disableDepthTest();
+            RenderSystem.depthMask(false);
+            renderDebug(guiGraphics);
+            RenderSystem.depthMask(true);
+            RenderSystem.enableDepthTest();
+            guiGraphics.flush();
+        }
+
     }
 
     @Override
@@ -69,6 +92,10 @@ public class WorldWidget extends InteractAbleWidget {
         );
     }
 
+    public boolean isDebug() {
+        return this.debug || (MiapiConfig.getServerConfig().other.developmentMode && Screen.hasAltDown());
+    }
+
     record UiAnchor(
             Matrix4f model,
             Matrix4f view,
@@ -81,19 +108,14 @@ public class WorldWidget extends InteractAbleWidget {
 
             float width = window.getGuiScaledWidth();
             float height = window.getGuiScaledHeight();
-
-            // UI -> NDC
             float ndcX = (screenX / width) * 2.0f - 1.0f;
             float ndcY = 1.0f - (screenY / height) * 2.0f;
 
-            // Combined transformation:
-            // local -> model -> view -> projection
             Matrix4f inverse = new Matrix4f(this.projection())
                     .mul(this.view())
                     .mul(this.model())
                     .invert();
 
-            // Near and far points on the screen ray.
             Vector4f near = new Vector4f(ndcX, ndcY, -1.0f, 1.0f)
                     .mul(inverse);
 
@@ -111,7 +133,7 @@ public class WorldWidget extends InteractAbleWidget {
             float dz = far.z - near.z;
 
             if (Math.abs(dz) < 1e-6f) {
-                return null; // Ray is parallel to z=0
+                return null;
             }
 
             float t = -near.z / dz;
@@ -162,6 +184,7 @@ public class WorldWidget extends InteractAbleWidget {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(false);
+        RenderSystem.enableDepthTest();
 
         for (WorldWidget widget : widgets) {
             if (widget == null) {
@@ -171,6 +194,8 @@ public class WorldWidget extends InteractAbleWidget {
             graphics.pose().mulPose(poseStack.last().pose());
             graphics.pose().mulPose(widget.localWorldTransform);
 
+            graphics.pose().mulPose(widget.debugTransform.toMatrix());
+
             widget.renderInWorld(
                     graphics,
                     partialTick
@@ -179,7 +204,17 @@ public class WorldWidget extends InteractAbleWidget {
             graphics.flush();
         }
         RenderSystem.depthMask(true);
+        RenderSystem.enableDepthTest();
+        Lighting.setupLevel();
 
+    }
+
+    private void renderDebug(GuiGraphics graphics) {
+        DebugHelper.renderDebug(
+                graphics,
+                getWidth(),
+                getHeight()
+        );
     }
 
     @Override
