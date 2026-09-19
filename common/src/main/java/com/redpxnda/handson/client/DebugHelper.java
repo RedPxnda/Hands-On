@@ -1,6 +1,7 @@
 package com.redpxnda.handson.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.redpxnda.handson.client.widgets.slot.CubeRenderHelper;
 import com.redpxnda.nucleus.util.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -190,6 +191,71 @@ public final class DebugHelper {
                 y,
                 Color.WHITE.argb(),
                 true
+        );
+    }
+
+    public static void renderSlot(
+            GuiGraphics graphics,
+            float outerX,
+            float outerY,
+            float innerX,
+            float innerY,
+            float depth,
+            float rimDepth
+    ) {
+        PoseStack pose = graphics.pose();
+        int rimColor = Color.TEXT_DARK_GRAY.abgr();
+        int insideColor = Color.GRAY.abgr();
+
+        // Recessed center.
+        CubeRenderHelper.render(
+                pose,
+                innerX, innerY,
+                +depth + rimDepth,
+                -innerX, -innerY,
+                depth,
+                insideColor);
+
+        // Top bezel.
+        CubeRenderHelper.render(
+                pose,
+                -outerX, -outerY,
+                -depth,
+                outerX, -innerY,
+                depth,
+                rimColor
+        );
+
+        // Bottom bezel.
+        CubeRenderHelper.render(
+                pose,
+                -outerX, innerY,
+                -depth,
+                outerX, outerY,
+                depth,
+                rimColor
+        );
+
+        // Left bezel.
+        CubeRenderHelper.render(
+                pose,
+                -outerX, -innerY,
+                -depth,
+                -innerX, innerY,
+                depth,
+                rimColor
+        );
+
+        // Right bezel.
+        CubeRenderHelper.render(
+                pose,
+                innerX,
+                -innerY,
+                -depth,
+                outerX,
+                innerY,
+                depth,
+                rimColor
         );
     }
 }
