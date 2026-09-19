@@ -14,7 +14,9 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import smartin.miapi.item.modular.Transform;
 
@@ -93,6 +95,14 @@ public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> impl
         addWidget(mainSlotWidget);
     }
 
+    private Slot actuallyNewSlot = null;
+
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        this.hoveredSlot = actuallyNewSlot;
+        actuallyNewSlot = null;
+        super.renderLabels(guiGraphics, mouseX, mouseY);
+    }
+
     @Override
     public void onClose() {
         closing = true;
@@ -101,6 +111,10 @@ public class TinkeringScreen extends AbstractContainerScreen<TinkeringMenu> impl
     public void onCloseReal() {
         super.onClose();
         minecraft.options.hideGui = false;
+    }
+
+    public void setHoveredSlot(@Nullable Slot slot) {
+        this.actuallyNewSlot = slot;
     }
 
     public int animationTicks = 4;

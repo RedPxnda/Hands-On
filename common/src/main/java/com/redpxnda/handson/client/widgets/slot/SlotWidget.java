@@ -3,6 +3,7 @@ package com.redpxnda.handson.client.widgets.slot;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.redpxnda.handson.client.DebugHelper;
 import com.redpxnda.handson.client.ModelHelper;
+import com.redpxnda.handson.client.TinkeringScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,137 +21,98 @@ public class SlotWidget extends InteractAbleWidget {
     private final Slot slot;
     public int highlightOffest = 0;
 
-    public SlotWidget(
-            AbstractContainerMenu menu,
-            Slot slot,
-            int x,
-            int y
-    ) {
+    public SlotWidget(AbstractContainerMenu menu, Slot slot, int x, int y) {
         super(x, y, SIZE, SIZE, Component.empty());
-
         this.menu = menu;
         this.slot = slot;
     }
 
-    public Slot getSlot() {
-        return slot;
-    }
-
-    public ItemStack getItem() {
-        return slot.getItem();
-    }
+    public ItemStack getItem() {return slot.getItem();}
 
     @Override
     public boolean isMouseOver(double mouseX, double mouseY) {
-        return mouseX >= getX()
-               && mouseX < getX() + getWidth()
-               && mouseY >= getY()
-               && mouseY < getY() + getHeight();
+        return mouseX >= getX() && mouseX < getX() + 16
+               && mouseY >= getY() && mouseY < getY() + 16;
     }
 
-    @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (!isMouseOver(mouseX, mouseY))
-            return false;
-
-        if (button != 0 && button != 1)
-            return false;
-
+    private boolean click(int button, ClickType type) {
         Minecraft mc = Minecraft.getInstance();
+        if (mc.gameMode == null || mc.player == null || mc.player.containerMenu != menu) return false;
 
-        if (mc.gameMode == null || mc.player == null)
-            return false;
+        int id = menu.slots.indexOf(slot);
+        if (id < 0) return false;
 
-        if (mc.player.containerMenu != menu)
-            return false;
-
-        int slotId = menu.slots.indexOf(slot);
-
-        if (slotId < 0)
-            return false;
-
-
-        mc.gameMode.handleInventoryMouseClick(
-                menu.containerId,
-                slotId,
-                button,
-                ClickType.PICKUP,
-                mc.player
-        );
-
+        mc.gameMode.handleInventoryMouseClick(menu.containerId, id, button, type, mc.player);
         return true;
     }
 
     @Override
-    public void renderWidget(
-            GuiGraphics graphics,
-            int mouseX,
-            int mouseY,
-            float partialTick
-    ) {
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (!isMouseOver(mouseX, mouseY)) return false;
+
+        // Left/right click
+        if (button == 0 || button == 1)
+            return click(button, Screen.hasShiftDown() ? ClickType.QUICK_MOVE : ClickType.PICKUP);
+
+        // Creative middle-click clone
+        if (button == 2) {
+            return click(button, ClickType.CLONE);
+        }
+        return false;
+    }
+
+    @Override
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         ItemStack stack = slot.getItem();
+
         graphics.pose().pushPose();
         graphics.pose().translate(0, 0, 16);
+
         if (isDebug()) {
             graphics.pose().pushPose();
             graphics.pose().translate(getX() + 8, getY() + 8, 0);
-            DebugHelper.renderSlot(
-                    graphics,
-                    9.0f,
-                    9.0f,
-                    8.0f,
-                    8.0f,
-                    8.0f,
-                    1.0f
-            );
+            DebugHelper.renderSlot(graphics, 9.0f, 9.0f, 8.0f, 8.0f, 8.0f, 1.0f);
             graphics.pose().popPose();
         }
+
         if (!stack.isEmpty()) {
             graphics.flush();
             graphics.pose().pushPose();
             graphics.pose().translate(0, 0, -150 + 2 + highlightOffest);
-            //RenderSystem.enableDepthTest();
             RenderSystem.depthMask(true);
-            ModelHelper.renderItem(graphics, Minecraft.getInstance().player, Minecraft.getInstance().level, stack, getX(), getY(), 0, 0);
-            //RenderSystem.disableDepthTest();
+            ModelHelper.renderItem(graphics, Minecraft.getInstance().player,
+                    Minecraft.getInstance().level, stack, getX(), getY(), 0, 0);
             graphics.flush();
             RenderSystem.depthMask(false);
             graphics.pose().popPose();
         }
+
         if (isMouseOver(mouseX, mouseY)) {
             graphics.pose().pushPose();
             graphics.pose().translate(0, 0, -8);
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
-            graphics.fill(
-                    getX(),
-                    getY(),
-                    getX() + 16,
-                    getY() + 16,
-                    0x40FFFFFF
-            );
+            graphics.fill(getX(), getY(), getX() + 16, getY() + 16, 0x40FFFFFF);
+            if (Minecraft.getInstance().screen instanceof TinkeringScreen screen) {
+                screen.setHoveredSlot(this.slot);
+            }
             graphics.flush();
             RenderSystem.enableDepthTest();
             graphics.pose().popPose();
         }
+
         if (!stack.isEmpty()) {
             graphics.pose().pushPose();
-            graphics.pose().translate(0, 0, -200 - 8 + 0.1f);
-            graphics.renderItemDecorations(
-                    Minecraft.getInstance().font,
-                    stack,
-                    getX(),
-                    getY()
-            );
+            graphics.pose().translate(0, 0, -207.9f);
+            graphics.renderItemDecorations(Minecraft.getInstance().font, stack, getX(), getY());
             graphics.pose().popPose();
             graphics.flush();
         }
+
         graphics.pose().popPose();
     }
 
     public boolean isDebug() {
-        return this.debug || (MiapiConfig.getServerConfig().other.developmentMode && Screen.hasAltDown());
+        return debug || (MiapiConfig.getServerConfig().other.developmentMode && Screen.hasAltDown());
     }
-
-
 }

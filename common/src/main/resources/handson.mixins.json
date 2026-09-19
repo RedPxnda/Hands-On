@@ -8,6 +8,7 @@
         "GameRendererAccessor"
     ],
     "mixins": [
+        "KeyMappingAccessor"
     ],
     "injectors": {
         "defaultRequire": 1
